@@ -1,0 +1,13 @@
+{
+  "name": "accessibility-checker-rules-validations",
+  "version": "0.1.0",
+  "description": "A package to run and validate the rules in the accessibility-checker plugin against known, or expected, pass and fail rates.",
+  "scripts": {
+    "cypress": "npx cypress run"
+  },
+  "author": "William Patton (@pattonwebz)",
+  "license": "MIT",
+  "devDependencies": {
+    "cypress": "^13.8.1"
+  }
+}
