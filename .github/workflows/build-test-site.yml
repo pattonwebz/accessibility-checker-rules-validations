@@ -15,7 +15,6 @@ jobs:
         image: mysql:5.6
         env:
           MYSQL_ROOT_PASSWORD: password
-          MYSQL_ROOT_HOST: '%'
           MYSQL_DATABASE: wordpress
           MYSQL_USER: wordpress
           MYSQL_PASSWORD: password
@@ -46,6 +45,9 @@ jobs:
 
       - name: Set up custom hostname
         run: echo "127.0.0.1 rulecheck.local" | sudo tee -a /etc/hosts
+
+      - name: Check user and PW against mysql
+        run: mysqladmin -h mysql -u wordpress -p'password' ping
 
       - name: Install WordPress
         run: |
