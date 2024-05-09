@@ -56,9 +56,10 @@ Cypress.Commands.add('recheckAndShowDetails', (postID) => {
 	cy.visit(Cypress.config('baseUrl') + '/wp-admin/post.php?post=' + postID + '&action=edit');
 
 	// if the gutenberg welcome modal is displayed, close it
-	cy.get('.components-modal').contains('Welcome to the block editor').then((welcomeModal) => {
+	cy.document().then((doc) => {
+		const welcomeModal = doc.querySelector('.components-modal__screen-overlay');
 		if (welcomeModal) {
-			cy.get('.components-button').contains('Close').click();
+			cy.get('.components-modal__screen-overlay button[aria-label="Close"]').click();
 		}
 	});
 
