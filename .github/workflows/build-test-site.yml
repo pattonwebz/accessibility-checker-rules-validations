@@ -2,6 +2,10 @@ name: Cypress tests
 
 on:
   workflow_dispatch:
+    inputs:
+      repo_hash:
+        description: 'Accessibility Checker Repo Hash'
+        required: true
 
 jobs:
   cypress-run:
@@ -46,7 +50,7 @@ jobs:
 
       - name: Install WordPress
         run: |
-          cat /tmp/wordpress/wp-config.php
+          wp config create --allow-root --path=/tmp/wordpress --dbname=wordpress --dbuser=wordpress --dbpass=wordpress --dbhost=mysql
           wp core install --allow-root --path=/tmp/wordpress --url=rulecheck.local --title=Test --admin_user=rulecheck --admin_password=5arWYMJtJnxTN5xpWjKBNS --admin_email=rulecheck@example.com
 
       - name: Import posts
