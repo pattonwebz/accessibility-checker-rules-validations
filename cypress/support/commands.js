@@ -33,6 +33,12 @@ Cypress.Commands.add('loginAndActivate', (username, password) => {
 			cy.visit(Cypress.config('baseUrl') + '/wp-login.php');
 			cy.get('#user_login').should('be.visible').should('be.enabled').type(username);
 			cy.get('#user_pass').should('be.visible').should('be.enabled').type(password);
+			cy.get('#user_login').invoke('val').then((val) => {
+				if (val !== username) {
+					cy.get('#user_login').clear();
+					cy.get('#user_login').type(username);
+				}
+			});
 			cy.get('#wp-submit').click();
 			cy.url().should('contain', '/wp-admin')
 		},
