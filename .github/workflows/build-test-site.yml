@@ -66,7 +66,9 @@ jobs:
           wp plugin install accessibility-checker --activate --allow-root --ssh=docker:wordpress
 
       - name: Run Cypress
-        uses: cypress-io/github-action@v2
+        uses: actions/setup-node@v2
         with:
-          start: npx run cypress
-          wait-on: 'http://rulecheck.local'
+          node-version: '20'
+        run: |
+          npm install
+          npx cypress run
