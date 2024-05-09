@@ -65,10 +65,12 @@ jobs:
         run: |
           wp plugin install accessibility-checker --activate --allow-root --ssh=docker:wordpress
 
-      - name: Run Cypress
+      - name: Setup Node
         uses: actions/setup-node@v2
         with:
           node-version: '20'
+
+      - name: Run Cypress
         run: |
           npm install
           npx cypress run
