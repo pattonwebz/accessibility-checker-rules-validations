@@ -3,9 +3,10 @@ name: Cypress tests
 on:
   workflow_dispatch:
     inputs:
+      repo_tag:
+        description: 'Accessibility Checker Tag'
       repo_hash:
-        description: 'Accessibility Checker Repo Hash'
-        required: true
+        description: 'Accessibility Checker Hash'
 
 jobs:
   cypress-run:
