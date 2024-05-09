@@ -55,11 +55,14 @@ Cypress.Commands.add('loginAndActivate', (username, password) => {
 Cypress.Commands.add('recheckAndShowDetails', (postID) => {
 	cy.visit(Cypress.config('baseUrl') + '/wp-admin/post.php?post=' + postID + '&action=edit');
 
+	// let the page have a second to get ready
+	cy.wait(200)
+
 	// if the gutenberg welcome modal is displayed, close it
 	cy.document().then((doc) => {
 		const welcomeModal = doc.querySelector('.components-modal__screen-overlay');
 		if (welcomeModal) {
-			cy.get('.components-modal__screen-overlay button[aria-label="Close"]').click();
+			cy.get('.components-modal__header button[aria-label="Close"]').click();
 		}
 	});
 
