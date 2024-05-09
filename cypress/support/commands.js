@@ -31,6 +31,7 @@ Cypress.Commands.add('loginAndActivate', (username, password) => {
 		[username, password],
 		() => {
 			cy.visit(Cypress.config('baseUrl') + '/wp-login.php');
+			cy.wait(50);
 			cy.get('#user_login').should('be.visible').should('be.enabled').type(username);
 			cy.get('#user_pass').should('be.visible').should('be.enabled').type(password);
 			cy.get('#user_login').invoke('val').then((val) => {
