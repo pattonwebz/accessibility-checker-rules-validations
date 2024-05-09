@@ -22,9 +22,9 @@ jobs:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
       wordpress:
-        image: wordpress:cli
+        image: wordpress:latest
         env:
-          WORDPRESS_DB_HOST: mysql
+          WORDPRESS_DB_HOST: 127.0.0.1
           WORDPRESS_DB_USER: wordpress
           WORDPRESS_DB_PASSWORD: password
           WORDPRESS_DB_NAME: wordpress
@@ -48,15 +48,15 @@ jobs:
 
       - name: Install WordPress
         run: |
-          docker exec wordpress wp core install --allow-root --url=rulecheck.local --title=Test --admin_user=rulecheck --admin_password=5arWYMJtJnxTN5xpWjKBNS --admin_email=rulecheck@example.com
+          wp core install --allow-root --path=/tmp/wordpress --url=rulecheck.local --title=Test --admin_user=rulecheck --admin_password=5arWYMJtJnxTN5xpWjKBNS --admin_email=rulecheck@example.com
 
       - name: Import posts
-        run: docker exec wordpress wp import data/wordpress-export.xml --allow-root
+        run: wp import data/wordpress-export.xml --allow-root --path=/tmp/wordpress
 
       - name: Install and activate plugin
         run: |
-          docker exec wordpress wp plugin install accessibility-checker --allow-root
-          docker exec wordpress wp plugin activate accessibility-checker --allow-root
+          wp plugin install accessibility-checker --allow-root --path=/tmp/wordpress
+          wp plugin activate accessibility-checker --allow-root --path=/tmp/wordpress
 
       - name: Run Cypress
         uses: cypress-io/github-action@v2
