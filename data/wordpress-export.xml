@@ -45,7 +45,7 @@
 		<link>http://rulecheck.local/2020/11/10/missing-alternative-text/</link>
 		<pubDate>Tue, 10 Nov 2020 19:42:57 +0000</pubDate>
 		<dc:creator><![CDATA[rulecheck]]></dc:creator>
-		<guid isPermaLink="false">https://demosite.equalizedigital.com/?p=153</guid>
+		<guid isPermaLink="false">http://rulecheck.local/?p=153</guid>
 		<description></description>
 		<content:encoded><![CDATA[<!-- wp:group {"layout":{"type":"constrained"}} -->
 <div class="wp-block-group"><!-- wp:heading -->
@@ -274,7 +274,7 @@
 		<link>http://rulecheck.local/2020/11/24/208/</link>
 		<pubDate>Tue, 24 Nov 2020 21:53:40 +0000</pubDate>
 		<dc:creator><![CDATA[rulecheck]]></dc:creator>
-		<guid isPermaLink="false">https://demosite.equalizedigital.com/?p=208</guid>
+		<guid isPermaLink="false">http://rulecheck.local/?p=208</guid>
 		<description></description>
 		<content:encoded><![CDATA[<!-- wp:heading {"level":1} -->
 <h1 class="wp-block-heading">Title of this Page</h1>
@@ -465,7 +465,7 @@
 		<link>http://rulecheck.local/2024/05/04/ambiguous-anchor-text/</link>
 		<pubDate>Sun, 05 May 2024 00:57:08 +0000</pubDate>
 		<dc:creator><![CDATA[rulecheck]]></dc:creator>
-		<guid isPermaLink="false">https://rulecheck.local.local/?p=782</guid>
+		<guid isPermaLink="false">http://rulecheck.local.local/?p=782</guid>
 		<description></description>
 		<content:encoded><![CDATA[<!-- wp:heading -->
 <h2 class="wp-block-heading">Passes</h2>
