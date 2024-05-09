@@ -54,6 +54,14 @@ Cypress.Commands.add('loginAndActivate', (username, password) => {
 
 Cypress.Commands.add('recheckAndShowDetails', (postID) => {
 	cy.visit(Cypress.config('baseUrl') + '/wp-admin/post.php?post=' + postID + '&action=edit');
+
+	// if the gutenberg welcome modal is displayed, close it
+	cy.get('.components-modal').contains('Welcome to the block editor').then((welcomeModal) => {
+		if (welcomeModal) {
+			cy.get('.components-button').contains('Close').click();
+		}
+	});
+
 	// find button that says 'Update' and click it
 	cy.get('.editor-post-publish-button').click();
 	// wait till a success message is displayed
