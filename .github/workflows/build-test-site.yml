@@ -55,12 +55,13 @@ jobs:
           wp core install --allow-root --ssh=docker:wordpress --url=rulecheck.local --title=Test --admin_user=rulecheck --admin_password=5arWYMJtJnxTN5xpWjKBNS --admin_email=rulecheck@example.com
 
       - name: Import posts
-        run: wp import data/wordpress-export.xml --allow-root --ssh=docker:wordpress --authors=create
+        run: |
+          wp plugin install wordpress-importer --activate --allow-root --ssh=docker:wordpress
+          wp import data/wordpress-export.xml --allow-root --ssh=docker:wordpress --authors=create
 
       - name: Install and activate plugin
         run: |
-          wp plugin install accessibility-checker --allow-root --ssh=docker:wordpress
-          wp plugin activate accessibility-checker --allow-root --ssh=docker:wordpress
+          wp plugin install accessibility-checker --activate --allow-root --ssh=docker:wordpress
 
       - name: Run Cypress
         uses: cypress-io/github-action@v2
