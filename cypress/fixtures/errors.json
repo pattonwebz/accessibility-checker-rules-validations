@@ -1,0 +1,38 @@
+{
+  "Ambiguous Anchor Text": {
+    "postId": 782,
+    "count": "22"
+  },
+  "Missing Title": {
+    "postId": 208,
+    "count": "1"
+  },
+  "Insufficient Color Contrast": {
+    "postId": 160,
+    "count": "2"
+  },
+  "Image Missing Alternative Text": {
+    "postId": 153,
+    "count": "2"
+  },
+  "Missing Table Header": {
+    "postId": 62,
+    "count": "3"
+  },
+  "Missing Form Label": {
+    "postId": 60,
+    "count": "8"
+  },
+  "Empty Table Header": {
+    "postId": 58,
+    "count": "3"
+  },
+  "Empty Form Label": {
+    "postId": 56,
+    "count": "3"
+  },
+  "Broken ARIA Reference": {
+    "postId": 54,
+    "count": "4"
+  }
+}
