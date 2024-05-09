@@ -1,0 +1,12 @@
+# Node modules
+node_modules/
+
+# Cypress
+cypress/videos/*
+cypress/screenshots/*
+
+# IDE / Editor directories
+.idea/
+.vscode/
+*.swp
+*.swo
