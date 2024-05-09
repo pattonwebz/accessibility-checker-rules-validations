@@ -30,7 +30,7 @@ jobs:
           - 80:80
         options: --health-cmd="curl -f http://127.0.0.1" --health-interval=15s --health-timeout=5s --health-retries=5
         volumes:
-          - ./wordpress:/var/www/html
+          - /tmp/wordpress:/var/www/html
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -46,17 +46,17 @@ jobs:
 
       - name: Install WordPress
         run: |
-          wp core download --allow-root --path=./wordpress
-          wp config create --allow-root --path=./wordpress --dbname=wordpress --dbuser=root --dbpass=password --dbhost=mysql
-          wp core install --allow-root --path=./wordpress --url=rulecheck.local --title=Test --admin_user=rulecheck --admin_password=5arWYMJtJnxTN5xpWjKBNS --admin_email=rulecheck@example.com
+          wp core download --allow-root --path=/tmp/wordpress
+          wp config create --allow-root --path=/tmp/wordpress --dbname=wordpress --dbuser=root --dbpass=password --dbhost=mysql
+          wp core install --allow-root --path=/tmp/wordpress --url=rulecheck.local --title=Test --admin_user=rulecheck --admin_password=5arWYMJtJnxTN5xpWjKBNS --admin_email=rulecheck@example.com
 
       - name: Import database
-        run: wp import data/wordpress-export.xml --allow-root --path=/var/www/html
+        run: wp import data/wordpress-export.xml --allow-root --path=/tmp/wordpress
 
       - name: Install and activate plugin
         run: |
-          wp plugin install accessibility-checker --allow-root --path=./wordpress
-          wp plugin activate accessibility-checker --allow-root --path=./wordpress
+          wp plugin install accessibility-checker --allow-root --path=/tmp/wordpress
+          wp plugin activate accessibility-checker --allow-root --path=/tmp/wordpress
 
       - name: Run Cypress
         uses: cypress-io/github-action@v2
