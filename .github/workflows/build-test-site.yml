@@ -51,6 +51,7 @@ jobs:
 
       - name: Install WordPress
         run: |
+          wp db check --allow-root --path/tmp/wordpress
           wp core install --allow-root --path=/tmp/wordpress --url=rulecheck.local --title=Test --admin_user=rulecheck --admin_password=5arWYMJtJnxTN5xpWjKBNS --admin_email=rulecheck@example.com
 
       - name: Import posts
