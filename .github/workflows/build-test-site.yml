@@ -23,7 +23,7 @@ jobs:
           WORDPRESS_DB_NAME: wordpress
         ports:
           - 80:80
-        options: --health-cmd="curl -f http://localhost" --health-interval=15s --health-timeout=5s --health-retries=5
+        options: --health-cmd="curl -f http://127.0.0.1" --health-interval=5s --health-timeout=10s --health-retries=20
     steps:
       - name: Checkout
         uses: actions/checkout@v2
