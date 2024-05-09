@@ -22,7 +22,7 @@ jobs:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
       wordpress:
-        image: wordpress:latest
+        image: wordpress:cli
         env:
           WORDPRESS_DB_HOST: mysql
           WORDPRESS_DB_USER: wordpress
@@ -46,21 +46,18 @@ jobs:
       - name: Set up custom hostname
         run: echo "127.0.0.1 rulecheck.local" | sudo tee -a /etc/hosts
 
-      - name: Check user and PW against mysql
-        run: mysqladmin -h 127.0.0.1 -u wordpress -p'password' ping
-
       - name: Install WordPress
         run: |
-          wp db check --allow-root --path=/tmp/wordpress
-          wp core install --allow-root --path=/tmp/wordpress --url=rulecheck.local --title=Test --admin_user=rulecheck --admin_password=5arWYMJtJnxTN5xpWjKBNS --admin_email=rulecheck@example.com
+          docker exec wordpress wp db check --allow-root
+          docker exec wordpress wp core install --allow-root --url=rulecheck.local --title=Test --admin_user=rulecheck --admin_password=5arWYMJtJnxTN5xpWjKBNS --admin_email=rulecheck@example.com
 
       - name: Import posts
-        run: wp import data/wordpress-export.xml --allow-root --path=/tmp/wordpress
+        run: docker exec wordpress wp import data/wordpress-export.xml --allow-root
 
       - name: Install and activate plugin
         run: |
-          wp plugin install accessibility-checker --allow-root --path=/tmp/wordpress
-          wp plugin activate accessibility-checker --allow-root --path=/tmp/wordpress
+          docker exec wordpress wp plugin install accessibility-checker --allow-root
+          docker exec wordpress wp plugin activate accessibility-checker --allow-root
 
       - name: Run Cypress
         uses: cypress-io/github-action@v2
