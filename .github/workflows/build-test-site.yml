@@ -23,7 +23,16 @@ jobs:
           WORDPRESS_DB_NAME: wordpress
         ports:
           - 80:80
-        options: --health-cmd="curl -f http://127.0.0.1" --health-interval=5s --health-timeout=10s --health-retries=20
+        wordpress:
+          image: wordpress:latest
+          env:
+            WORDPRESS_DB_HOST: mysql
+            WORDPRESS_DB_USER: root
+            WORDPRESS_DB_PASSWORD: password
+            WORDPRESS_DB_NAME: wordpress
+          ports:
+            - 80:80
+          options: --health-cmd="curl -f -s -o /dev/null -w '%{http_code}' http://127.0.0.1/wp-admin/install.php | grep -q -e '200' -e '302'" --health-interval=15s --health-timeout=30s --health-retries=5
     steps:
       - name: Checkout
         uses: actions/checkout@v2
