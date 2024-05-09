@@ -48,7 +48,7 @@ jobs:
 
       - name: Install WordPress
         run: |
-          wp core install --allow-root --ssh=docker:wordpress --url=rulecheck.local --title=Test --admin_user=rulecheck --admin_password=5arWYMJtJnxTN5xpWjKBNS --admin_email=rulecheck@example.com
+          wp core install --allow-root --ssh=docker-compose:wordpress --url=rulecheck.local --title=Test --admin_user=rulecheck --admin_password=5arWYMJtJnxTN5xpWjKBNS --admin_email=rulecheck@example.com
 
       - name: Import posts
         run: wp import data/wordpress-export.xml --allow-root --ssh=docker:wordpress
