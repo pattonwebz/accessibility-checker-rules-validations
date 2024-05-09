@@ -56,9 +56,8 @@ jobs:
 
       - name: Import posts
         run: |
-          ls -ld /tmp
-          ls -ld /tmp/wordpress
-          cp -R ./data /tmp/wordpress
+          sudo cp -R ./data /tmp/wordpress
+          sudo chown www-data:www-data /tmp/wordpress/data -R
           wp plugin install wordpress-importer --activate --allow-root --ssh=docker:wordpress
           wp import data/wordpress-export.xml --allow-root --ssh=docker:wordpress --authors=create
 
