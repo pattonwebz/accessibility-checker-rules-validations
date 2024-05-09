@@ -74,3 +74,12 @@ jobs:
         run: |
           npm install
           npx cypress run
+
+      - name: Archive Cypress videos
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: cypress
+          path: |
+            cypress/videos
+            cypress/screenshots
