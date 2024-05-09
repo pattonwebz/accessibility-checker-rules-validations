@@ -56,6 +56,7 @@ jobs:
 
       - name: Import posts
         run: |
+          cp -R ./data /tmp/wordpress
           wp plugin install wordpress-importer --activate --allow-root --ssh=docker:wordpress
           wp import data/wordpress-export.xml --allow-root --ssh=docker:wordpress --authors=create
 
