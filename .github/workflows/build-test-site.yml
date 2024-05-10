@@ -61,9 +61,83 @@ jobs:
           wp plugin install wordpress-importer --activate --allow-root --ssh=docker:wordpress
           wp import data/wordpress-export.xml --allow-root --ssh=docker:wordpress --authors=create
 
+      - name: Check repo_hash or tag in other repository
+        id: check_repo_hash
+        if: github.event.inputs.repo_hash != ''
+        run: |
+          REPO_HASH="${{ github.event.inputs.repo_hash }}"
+          if [ -n "$REPO_HASH" ]; then
+            RESPONSE=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github.v3+json" \
+              "https://api.github.com/repos/equalizedigital/accessibility-checker/commits/$REPO_HASH")
+
+            if [[ "$RESPONSE" == *"message"* && "$RESPONSE" == *"Not Found"* ]]; then
+              echo "No commit found with hash $REPO_HASH in the other repository"
+              FOUND=false
+            else
+              FOUND=true
+              echo "Commit found with hash $REPO_HASH in the other repository"
+            fi
+          else
+            echo "No repo_hash provided"
+            FOUND=false
+          fi
+          
+          if [ "$FOUND" == true ]; then
+            git clone --no-checkout https://github.com/equalizedigital/accessibility-checker.git /tmp/accessibility-checker
+            cd /tmp/accessibility-checker
+            git fetch origin $REPO_HASH
+            git checkout $REPO_HASH
+            cd -
+          fi
+          echo "::set-output name=hash_found::$FOUND"
+
+      - name: Check repo_tag in other repository
+        id: check_repo_tag
+        if: github.event.inputs.repo_tag == '' && github.event.inputs.repo_hash == ''
+        run: |
+          REPO_TAG="${{ github.event.inputs.repo_tag }}"
+          if [ -n "$REPO_TAG" ]; then
+            RESPONSE=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github.v3+json" \
+              "https://api.github.com/repos/equalizedigital/accessibility-checker/tags")
+
+            if echo "$RESPONSE" | grep -q "\"name\": \"$REPO_TAG\""; then
+              echo "Tag $REPO_TAG found in the other repository"
+              echo "::set-output name=tag_found::true"
+                FOUND=true
+            else
+              echo "No tag found with name $REPO_TAG in the other repository"
+              FOUND=false
+            fi
+          fi
+          
+          if [ "$FOUND" == true ]; then
+            git clone --no-checkout https://github.com/equalizedigital/accessibility-checker.git /tmp/accessibility-checker
+            cd /tmp/accessibility-checker
+            git fetch origin tag $REPO_TAG
+            git checkout $REPO_TAG
+            cd -
+          fi
+          
+          echo "::set-output name=tag_found::$FOUND"
+
       - name: Install and activate plugin
         run: |
-          wp plugin install accessibility-checker --activate --allow-root --ssh=docker:wordpress
+          if [[ -z "${{ steps.check_repo_hash.outputs.hash_found }}" || "${{ steps.check_repo_hash.outputs.hash_found }}" == 'false' ]] && [[ -z "${{ steps.check_repo_tag.outputs.tag_found }}" || "${{ steps.check_repo_tag.outputs.tag_found }}" == 'false' ]]; then
+            echo "Installing from wordpress.org repository..."
+            wp plugin install accessibility-checker --allow-root --ssh=docker:wordpress
+          else 
+            echo "Plugin installed from tag or hash, building..."
+            cd /tmp/accessibility-checker
+            composer install --no-dev --no-interaction
+            npm install --production --ignore-scripts
+            npm run build
+            sudo cp -R /tmp/accessibility-checker /var/www/html/wp-content/plugins
+            sudo chown www-data:www-data /var/www/html/wp-content/plugins/accessibility-checker -R
+          fi
+
+          wp plugin activate accessibility-checker --allow-root --ssh=docker:wordpress
 
       - name: Setup Node
         uses: actions/setup-node@v2
