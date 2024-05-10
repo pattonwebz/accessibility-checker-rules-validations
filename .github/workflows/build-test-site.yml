@@ -131,7 +131,7 @@ jobs:
             echo "Plugin installed from tag or hash, building..."
             cd /tmp/accessibility-checker
             composer install --no-dev --no-interaction
-            npm install --production --ignore-scripts
+            npm install --ignore-scripts
             npm run build
             sudo cp -R /tmp/accessibility-checker /var/www/html/wp-content/plugins
             sudo chown www-data:www-data /var/www/html/wp-content/plugins/accessibility-checker -R
