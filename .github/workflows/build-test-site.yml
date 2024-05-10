@@ -133,8 +133,8 @@ jobs:
             composer install --no-dev --no-interaction
             npm install --ignore-scripts
             npm run build
-            sudo cp -R /tmp/accessibility-checker /var/www/html/wp-content/plugins
-            sudo chown www-data:www-data /var/www/html/wp-content/plugins/accessibility-checker -R
+            sudo cp -R /tmp/accessibility-checker /tmp/wordpress/wp-content/plugins
+            sudo chown www-data:www-data /tmp/wordpress/wp-content/plugins/accessibility-checker -R
           fi
 
           wp plugin activate accessibility-checker --allow-root --ssh=docker:wordpress
