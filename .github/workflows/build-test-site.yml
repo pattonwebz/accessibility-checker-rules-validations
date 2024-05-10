@@ -94,7 +94,7 @@ jobs:
 
       - name: Check repo_tag in other repository
         id: check_repo_tag
-        if: github.event.inputs.repo_tag != ''
+        if: github.event.inputs.repo_tag != '' && steps.check_repo_hash.outputs.hash_found == 'true'
         run: |
           REPO_TAG="${{ github.event.inputs.repo_tag }}"
           if [ -n "$REPO_TAG" ]; then
