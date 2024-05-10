@@ -34,6 +34,7 @@ Cypress.Commands.add('loginAndActivate', (username, password) => {
 			cy.wait(50);
 			cy.get('#user_login').should('be.visible').should('be.enabled').type(username);
 			cy.get('#user_pass').should('be.visible').should('be.enabled').type(password);
+			// sometimes the type starts too fast, make a 2nd attempt if it's not filled properly.
 			cy.get('#user_login').invoke('val').then((val) => {
 				if (val !== username) {
 					cy.get('#user_login').clear();
