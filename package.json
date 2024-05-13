@@ -5,9 +5,9 @@
   "scripts": {
     "cypress": "npx cypress run"
   },
-  "author": "William Patton (@pattonwebz)",
+  "author": "William Patton (@pattonwebz), Equalize Digital",
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "cypress": "^13.8.1"
   }
 }
