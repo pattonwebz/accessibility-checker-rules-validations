@@ -76,12 +76,13 @@ Cypress.Commands.add('recheckAndShowDetails', (postID) => {
 
 	cy.intercept('GET', Cypress.config('baseUrl') + '/wp-admin/admin-ajax.php?action=edac_readability_ajax*').as('readabilityScanResults');
 	cy.wait('@readabilityScanResults', { timeout: 10000 });
+	// TODO: consider not waiting and instead watching for the 'edac-panel-loading' class to be removed.
 	cy.wait(1000);
 
 	// find the 'Details' tab and click it
 	cy.get('.edac-tab').contains('Details').scrollIntoView();
-	cy.wait(100);
 	cy.get('.edac-tab').contains('Details').click();
+	cy.wait(100);
 });
 
 Cypress.Commands.add('checkIssues', (key) => {
