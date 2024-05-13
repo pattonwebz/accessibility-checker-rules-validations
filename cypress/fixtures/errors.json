@@ -23,10 +23,6 @@
       "Image Empty Alternative Text": {
         "count": "1",
         "type": "warning"
-      },
-      "ARIA Hidden": {
-        "count": "1",
-        "type": "warning"
       }
     }
   },
