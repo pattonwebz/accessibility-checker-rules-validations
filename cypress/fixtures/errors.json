@@ -9,11 +9,26 @@
   },
   "Insufficient Color Contrast": {
     "postId": 160,
-    "count": "2"
+    "count": "2",
+    "note": "Not yet in the test suite"
   },
   "Image Missing Alternative Text": {
     "postId": 153,
-    "count": "2"
+    "count": "2",
+    "otherIssues": {
+      "Missing Form Label": {
+        "count": "2",
+        "type": "error"
+      },
+      "Image Empty Alternative Text": {
+        "count": "1",
+        "type": "warning"
+      },
+      "ARIA Hidden": {
+        "count": "1",
+        "type": "warning"
+      }
+    }
   },
   "Missing Table Header": {
     "postId": 62,
@@ -21,11 +36,35 @@
   },
   "Missing Form Label": {
     "postId": 60,
-    "count": "8"
+    "count": "8",
+    "otherIssues": {
+      "Image Missing Alternative Text": {
+        "count": "1",
+        "type": "error"
+      },
+      "Empty Button": {
+        "count": "1",
+        "type": "error"
+      },
+      "Broken ARIA Reference": {
+        "count": "1",
+        "type": "error"
+      },
+      "Image Empty Alternative Text": {
+        "count": "1",
+        "type": "warning"
+      }
+    }
   },
   "Empty Table Header": {
     "postId": 58,
-    "count": "3"
+    "count": "3",
+    "otherIssues": {
+      "Missing Table Header": {
+        "count": "1",
+        "type": "error"
+      }
+    }
   },
   "Empty Form Label": {
     "postId": 56,
